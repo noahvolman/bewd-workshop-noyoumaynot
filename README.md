@@ -38,10 +38,23 @@ Nu werken de endpoints alleen als je eerst /login hebt uitgevoerd
 De volgende stap is het uitbreiden van de /login url met username en wachtwoord.
 Voor nu geven we deze als parameters mee in de url.
 Verwijder de username en wachtwoord constanten uit de controller. Deze hebben we niet meer nodig. We krijgen het immers als parameter mee.
+Controleer hardcoded op username wachtwoord in de AuthenticationService. Maak alleen een token als het wachtwoord klopt.
 
 ## 7. Token meegeven in berichten
 Vanaf nu gaan we de token steeds mee geven ieder bericht.
+Verander de authentication methode zodanig dat deze de token uit het bericht haalt.
 
-# TODO: 
-- Eigenlijk moeten we ergens op username wachtwoord controleren
-- Authenticatie. Twee gebruikers. De ene mag alles bekijken. De andere mag ook deleten en inserten.
+## 8. Een tweede stap naar autorisatie
+Het is natuurlijk suf om de username en wachtwoord mee te geven als parameters
+Maak daarom nu een user klasse. Deze heeft een username en een wachtwoord.
+Geef in plaats van de url parameters een json object mee username en wachtwoord. Maak van de get een post.
+
+Maak ook een klasse rol. Attributen zijn naam (String), gebruiker (boolean) en beheerder (boolean).
+Definieer 2 rollen in de constructor van AuthenticationService. Een beheerder en een eindgebruiker.
+Maak voor beide rollen een gebruiker met wachtwoord.
+
+## 9. Autorisatie
+Bouw nu dat enkel de user met de beheerderrol, films mag toevoegen en verwijderen.
+
+## Extra:
+Maak de Tabellen in H2 en haal daar de data vandaan (user en movie)
