@@ -19,21 +19,21 @@ In de loop van deze workshop gaan we onderscheid maken in wie deze endpoints mog
 
 ## 2. Gebruiken TokenService
 Nu kan nog iedereen elke endpoint benaderen. Dat willen we niet. We willen naar een systeem waar je moet inloggen om de juiste toegang te krijgen.
-Daarvoor nemen we eerst de bestaande authenticationservice in gebruik. 
-Deze wordt al geïnjecteerd in de moviecontroller.
+Daarvoor nemen we eerst de bestaande *AuthenticationService* in gebruik. 
+Deze wordt al geïnjecteerd in de *MovieController*.
 Om de methodes te kunnen aanroepen hebben we een gebruikersnaam en wachtwoord nodig.
-Zet deze voorlopig als constanten in de moviecontroller.
+- Zet een username en een wachtwoord voorlopig als hardcoded String constanten in de *MovieController*.
 
 ## 3. De eerste stap naar autorisatie
-In de moviecontroller bevindt zich een methode authenticate. 
-Roep deze aan vanuit iedere endpoint. 
+In de *MovieController* bevindt zich een methode authenticate. 
+Roep deze aan vanuit iedere endpoint.
 Je zult zien dat je op iedere endpoint een exception krijgt.
 Bouw een ControllerAdvice die zorgt voor een nette status 401 (unauthorized).
 Door de isValidToken methode true laten retourneren ipv false, kun je zorgen dat de exception niet wordt gegooid.
 Dit is natuurlijk niet zo netjes. Je wil hier echt controleren.
 
 ## 4. Tokens genereren
-In de authenticationcontroller staan de methodes login, isValidRequest en getUsername.
+In de *AuthenticationService* staan de methodes login, isValidRequest en getUsername.
 Herschrijf deze methodes zodanig dat er een usertoken wordt gegeneerd en de juiste gegevens worden teruggegeven.
 
 ## 5 Login endpoint maken
@@ -72,3 +72,40 @@ Maak de Tabellen in H2 en haal daar de data vandaan (user en movie)
 
 # TODO
 - Wachtwoord hashing naar de H2 database
+
+# WIP: Opbouw workshop
+
+1. Introductie van repo. 
+    1. Beschrijving van hoofddoel: Endpoints alleen toegankelijk maken voor bepaalde gebruikers.
+        - subdoel 1 (Authenticatie): Op een betrouwbare manier erachter komen wie een gebruiker is (username/password) en een 401 geven als de gebruiker onbekend is.
+        - subdoel 2 (Autorisatie): Per endpoint controleren of de gebruiker er bij mag en een 403 geven als dat niet zo is.
+1. Eerst subdoel 1: Authenticatie. WIE BEN JIJ?
+   1. Endpoint afschermen door te checken of een gebruiker het juiste wachtwoord weet.
+        - Door een QueryParam mee te geven met het universele hardcoded wachtwoord. 401 bij fout.
+        - Volgende probleem: Dit is nu wel afgeschermd, maar niet per gebruiker en een vast wachtwoord is ook niet erg veilig.
+   1. UserDatabase: username/password per gebruiker bijhouden in een lijst.
+        - QueryParam voor user en QueryParam voor password. User class met username/password. 
+        - Voor nu hardcoded in een list, maar het is niet moeilijk voor studenten om een database tabel er bij te fantaseren.
+        - Volgende probleem: Gebruikers sturen bij elk request hun username / wachtwoord op, die ook nog eens leesbaar in de adresbalk staan. Not great.
+   1. Tokens: Een eigen login endpoint met username/password, daarna alle overige endpoints met token in QueryParam. Token moet worden opgeslagen in een List of Map.
+        - Very nice. subdoel 1 behaald!
+   1. Prettier login: 
+      - Verander de login endpoint in een POST met userdata json body (username/password) en een token JSON response.
+1. Subdoel 2: Autorisatie: MAG DAT?
+   1. User rol: Voeg isAdmin boolean toe aan User.
+      - Rol check: Maak een AuthorizationService class met een methode checkUserIsAdmin(String token). Deze moet beschikbaar zijn in je Controller. 
+      - Deze AuthorizationService heeft de AuthenticationService nodig om het User object op te halen. Regel dat met Dependency Injection.
+      - Probleem: Maar een enkele rol?
+   1. Rollen!
+      - Maak een Rollen enum met een aantal rollen: MOVIE_READER, MOVIE_DELETER, MOVIE_CREATOR, MOVIE_UPDATER, ADMIN.
+      - Pas de User class aan dat deze een lijst van rollen heeft. Pas je 
+      - Pas de AuthorizeService aan zodat deze een generieke methode heeft met een token en een rol als param.
+      - Voeg checks toe aan de verschillende endpoints.
+1. Extra / Cleanup:
+   - Maak van token een class ipv String met een expiration date. Sta meerdere 'sessions' per user toe.
+   - Token in cookie ipv QueryParam.
+   - Voeg de rollen van een gebruiker toe aan de token (AKA claims) voor snelle verificatie in de controller.
+   - Users and roles in Database.
+   - User and roles management endpoints/controllers.
+   - Password hashing.
+   - Users in Groepen, groepen met rollen.
