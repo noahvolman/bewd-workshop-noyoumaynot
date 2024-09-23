@@ -69,3 +69,6 @@ Bouw nu dat enkel de user met de beheerderrol, films mag toevoegen en verwijdere
 
 ## Extra:
 Maak de Tabellen in H2 en haal daar de data vandaan (user en movie)
+
+# TODO
+- Wachtwoord hashing naar de H2 database
