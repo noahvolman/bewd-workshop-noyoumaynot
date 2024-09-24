@@ -70,8 +70,13 @@ Bouw nu dat enkel de user met de beheerderrol, films mag toevoegen en verwijdere
 ## 10 Gebruik database
 Maak de Tabellen in H2 en haal daar de data vandaan (user en movie)
 
+## 11 Hashing
+In deze stap ga je het wachtwoord gehashed in de database opslaan.
+Vervolgens vergelijk je de hash van het gestuurde wachtwoord met de hash uit de database.
+Kijk voor het gebruik van hashes naar stap 5.2 van https://www.baeldung.com/java-password-hashing.
+Let op: hier wordt gebruik gemaakt van een salt. Deze moet dus ook worden opgeslagen.
+
 # TODO
-- Wachtwoord hashing naar de H2 database (stap 11)
 - Encrypten databaseconnectie met Jasypt oid (stap 12)
 
 # WIP: Opbouw workshop
