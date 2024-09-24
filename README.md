@@ -50,7 +50,7 @@ Bewaar het gegenereerde token in een publieke variabele.
 Gebruik deze waarde in de authentication methode.
 Nu werken de endpoints alleen als je eerst /login hebt uitgevoerd
 
-## 6 Username en wachtwoord controleren
+## 6 Eindelijk authenticatie: Username en wachtwoord controleren
 De volgende stap is het uitbreiden van de /login url met username en wachtwoord.
 Voor nu geven we deze als parameters mee in de url.
 Verwijder de username en wachtwoord constanten uit de controller. Deze hebben we niet meer nodig. We krijgen het immers als parameter mee.
