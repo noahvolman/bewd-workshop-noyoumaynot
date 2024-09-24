@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 
 @RestController
@@ -46,11 +47,11 @@ public class MovieController {
         return ResponseEntity.ok().build();
     }
 
-    private String authenticate(HttpServletRequest request) throws Exception {
-        if (authenticationService.isValidToken("")){
-            return authenticationService.getUsername("");
+    private String authenticate(String token) throws Exception {
+        if (authenticationService.isValidToken(token)){
+            return authenticationService.getUsername(token);
         } else {
-            throw new Exception("Invalid token");
+            throw new AuthenticationException("Invalid token");
         }
     }
 

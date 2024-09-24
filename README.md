@@ -8,8 +8,14 @@ Spring Boot heeft immers ook hiervoor handige functionaliteit. Deze heeft echter
 De kracht zit hem in de magie, maar als het niet werkt heb je veel kennis nodig om dit te herstellen.
 
 ### Zelf aan de slag
-Het doel van de workshop is om een beter inzicht te krijgen hoe authenticatie en autorisatie in elkaar steekt.
-Dat bereiken we door stapsgewijs door de materie te gaan.
+**Hoofddoel**
+Endpoints toegankelijk maken voor bepaalde (groepen) gebruikers.
+
+**Subdoel 1**
+(Authenticatie): Op een betrouwbare manier erachter komen wie een gebruiker is (username/password) en een 401 geven als de gebruiker onbekend is.
+
+**Subdoel 2**
+(Autorisatie): Per endpoint controleren of de gebruiker er bij mag en een 403 geven als dat niet zo is.
 
 # Workshop
 ## 1. Clone deze repo
@@ -53,10 +59,13 @@ Controleer *hardcoded* op username wachtwoord in de AuthenticationService. Maak 
 
 ## 7. Token meegeven in berichten
 Vanaf nu gaan we de token steeds mee geven met ieder bericht.
-Verander de authentication methode zodanig dat deze de token uit het bericht haalt.
+Hiervoor heb je in Spring Boot de annotatie *@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization*.
+
+Voeg deze als parameter aan je endpoints toe. 
+Geef vervolgens de *authorization* parameter mee aan de authenticate-methode.
 
 ## 8. Een tweede stap naar autorisatie
-Het is natuurlijk suf om de username en wachtwoord mee te geven als parameters.
+Het is natuurlijk suf om de username en wachtwoord mee te geven als parameters als je de login aanroept.
 Maak daarom nu een user klasse. Deze heeft een username en een wachtwoord.
 Geef in plaats van de url parameters een json object mee met daarin username en wachtwoord. Maak van de get een post.
 
@@ -81,10 +90,6 @@ Let op: hier wordt gebruik gemaakt van een salt. Deze moet dus ook worden opgesl
 
 # WIP: Opbouw workshop
 
-1. Introductie van repo. 
-    1. Beschrijving van hoofddoel: Endpoints alleen toegankelijk maken voor bepaalde gebruikers.
-        - subdoel 1 (Authenticatie): Op een betrouwbare manier erachter komen wie een gebruiker is (username/password) en een 401 geven als de gebruiker onbekend is.
-        - subdoel 2 (Autorisatie): Per endpoint controleren of de gebruiker er bij mag en een 403 geven als dat niet zo is.
 1. Eerst subdoel 1: Authenticatie. WIE BEN JIJ?
    1. Endpoint afschermen door te checken of een gebruiker het juiste wachtwoord weet.
         - Door een QueryParam mee te geven met het universele hardcoded wachtwoord. 401 bij fout.
