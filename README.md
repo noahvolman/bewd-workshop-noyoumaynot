@@ -67,11 +67,12 @@ Maak voor beide rollen een gebruiker met wachtwoord.
 ## 9. Autorisatie
 Bouw nu dat enkel de user met de beheerderrol, films mag toevoegen en verwijderen.
 
-## Extra:
+## 10 Gebruik database
 Maak de Tabellen in H2 en haal daar de data vandaan (user en movie)
 
 # TODO
-- Wachtwoord hashing naar de H2 database
+- Wachtwoord hashing naar de H2 database (stap 11)
+- Encrypten databaseconnectie met Jasypt oid (stap 12)
 
 # WIP: Opbouw workshop
 
