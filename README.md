@@ -76,7 +76,7 @@ Maak voor beide rollen een gebruiker met wachtwoord.
 ## 9. Autorisatie
 Bouw nu dat enkel de user met de beheerderrol, films mag toevoegen en verwijderen.
 
-## 10 Gebruik database
+## 10 Gebruik database (deel 1)
 Maak de Tabellen in H2 en haal daar de data vandaan (user en movie)
 
 ## 11 Hashing
@@ -85,8 +85,31 @@ Vervolgens vergelijk je de hash van het gestuurde wachtwoord met de hash uit de 
 Kijk voor het gebruik van hashes naar stap 5.2 van https://www.baeldung.com/java-password-hashing.
 Let op: hier wordt gebruik gemaakt van een salt. Deze moet dus ook worden opgeslagen.
 
-# TODO
-- Encrypten databaseconnectie met Jasypt oid (stap 12)
+## 12 Encryptie
+Onze applicatie is inmiddels behoorlijk veilig.
+We hebben authenticatie, autorisatie en de wachtwoorden worden gehashed opgeslagen.
+Er is echter nog een potentieel probleem.
+De properties voor spring boot staan in plain tekst in de resources map.
+Daar kunnen gevoelige gegevens in staan. Zoals je wachtwoord om contact te maken met een database.
+Deze gevoelige properties wil je versleuteld opslaan.
+
+- Lees  https://www.baeldung.com/spring-boot-jasypt/
+- Bedenk een property waarvan je de waarde versleuteld op wil slaan en doe dit.
+- Schrijf een test waarmee je aantoont dat de encryptie werkt.
+
+## 13 Gebruik database (deel 2)
+We hebben nu de user en de movie in de database. Dat is eigenlijk niet voldoende.
+Je wil daar ook de rollen definieren en daar de gebruiker aan koppelen.
+- Maak een tabel "roles" (name, description) en een tabel user_roles (username, rolename) aan.
+- Pas vervolgens je code zo aan dat de rol hier vandaan wordt gehaald.
+- Pas ook je code aan dat op deze rol wordt gecontroleerd ipv op de boolean.
+
+## EXTRA Omzetten naar Spring Boot
+De database staat nu goed en de endpoints ook. Authenticatie en autorisatie hebben we handmatig gebouwd.
+Spring Boot biedt hier echter oplossingen voor. 
+- Ga op zoek naar bronnen om dit op te lossen met Spring Boot
+- Pas deze oplossingen toe. 
+- Wat is je mening hierover? Makkelijk, moeilijk, overzichtelijk, of juist niet?
 
 # WIP: Opbouw workshop
 
@@ -116,7 +139,7 @@ Let op: hier wordt gebruik gemaakt van een salt. Deze moet dus ook worden opgesl
    - Maak van token een class ipv String met een expiration date. Sta meerdere 'sessions' per user toe.
    - Token in cookie ipv QueryParam.
    - Voeg de rollen van een gebruiker toe aan de token (AKA claims) voor snelle verificatie in de controller.
-   - Users and roles in Database.
+   - Users and roles in Database. (Done)
    - User and roles management endpoints/controllers.
-   - Password hashing.
+   - Password hashing. (Done)
    - Users in Groepen, groepen met rollen.
