@@ -3,15 +3,17 @@ package han.aim.se.noyoumaynot.movie.domain;
 // This class is called a DTO (Data Transferable Object)
 
 public class Movie {
-    private String movie_id;
+    public String getMovieid() {
+        return movieid;
+    }
+
+    public void setMovieid(String movieid) {
+        this.movieid = movieid;
+    }
+
+    private String movieid;
     private String name;
 
-    public String getMovie_id() {
-        return movie_id;
-    }
-    public void setMovie_id(String movie_id) {
-        this.movie_id = movie_id;
-    }
     public String getName() {
         return name;
     }
