@@ -7,14 +7,16 @@ import han.aim.se.noyoumaynot.movie.service.AuthenticationService;
 import han.aim.se.noyoumaynot.movie.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api")
 public class MovieController {
     private final MovieService movieService;
     private final AuthenticationService authenticationService;
@@ -25,49 +27,40 @@ public class MovieController {
         this.authenticationService = authenticationService;
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return authenticationService.login(user.getUsername(), user.getPassword()).getToken();
+    @PostMapping("/auth/login")
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDTO loginDto){
+        String token = authenticationService.login(loginDto);
+
+        JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
+
+        return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
     }
 
     @GetMapping("/movies")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public List<Movie> getAllMovies(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
-        authenticate(token);
         return movieService.getMovieList();
     }
 
     @GetMapping("/movies/show")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public Movie getMovieById(@RequestParam("id") String id, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
-        authenticate(token);
         Movie movie = movieService.getMovieById(id);
         return movie;
     }
 
     @PostMapping("/movies/add")
+    @PreAuthorize("hasRole('ADMIN')")
     public Movie addMovie(@RequestBody Movie movie, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
-        Role role = authenticate(token);
-        if (!role.getIsAdmin()) {
-            throw new AuthorizationException("Unauthorized");
-        }
         movieService.insertMovie(movie);
         return movie;
     }
 
     @DeleteMapping("/movies/delete/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteMovie(@PathVariable("id") String id, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
-        Role role = authenticate(token);
-        if (!role.getIsAdmin()) {
-            throw new AuthorizationException("Unauthorized");
-        }
         movieService.deleteMovie(id);
         return ResponseEntity.ok().build();
-    }
-
-    private Role authenticate(String token) throws AuthenticationException {
-        if (authenticationService.isValidToken(token)) {
-            return authenticationService.getRole(token);
-        } else {
-            throw new AuthenticationException("Invalid token");
-        }
     }
 }

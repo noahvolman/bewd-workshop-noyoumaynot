@@ -1,8 +1,8 @@
-INSERT INTO users (userid, username, password, salt) VALUES (1, 'admin','7986082e9d89be150d9c8748ba9f16a1de0571354fbb9163cd8fc194c1fa263044dd75b31831155e234b37f85477de359f879eb556b2244d0288f1f1f02c489f', 'c788a0ffb54ededb5b8069f487208c8f');
-INSERT INTO users (userid, username, password, salt) VALUES (2, 'user','a8af5d239b15eda459737fa9ac789e2dc750bd765f1dc48a194d76fd8389083f85e3ee0d814f07fb82b440f07934ba2fbd85bc781e04ee086226de19686eca68', 'dd1308adadd4b0298e57b3bf6800c2d9');
+INSERT INTO users (userid, username, password) VALUES (1, 'admin','$2a$10$SPW7hGG2OSTk1SovKFloDeDJMgXAsYigarLoNzGP.aHlaqy.G2/1S');
+INSERT INTO users (userid, username, password) VALUES (2, 'user','$2a$10$B3vR0AZmmhJf8eHyYzvXDO6N9s5fDHR2R6jdu2VqaFGwXt.7c4Dzy');
 
-INSERT INTO roles (roleid, name, isadmin) VALUES (1, 'admin', 1);
-INSERT INTO roles (roleid, name, isadmin) VALUES (2, 'user', 0);
+INSERT INTO roles (roleid, name, isadmin) VALUES (1, 'ROLE_ADMIN', 1);
+INSERT INTO roles (roleid, name, isadmin) VALUES (2, 'ROLE_USER', 0);
 
 INSERT INTO user_roles (userid, roleid) VALUES (1, 1);
 INSERT INTO user_roles (userid, roleid) VALUES (2, 2);

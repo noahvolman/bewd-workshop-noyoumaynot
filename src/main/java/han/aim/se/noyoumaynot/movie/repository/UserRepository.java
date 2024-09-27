@@ -9,33 +9,20 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public class UserRepository {
     private final JdbcTemplate jdbcTemplate;
-    private final SecurePass securePass;
 
-    public UserRepository(@Autowired JdbcTemplate jdbcTemplate, @Autowired SecurePass securePass) {
+    public UserRepository(@Autowired JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.securePass = securePass;
     }
 
-    public Role getRoleForUser(String username) {
-        return jdbcTemplate.query("SELECT roles.name, roles.isAdmin from roles, user_roles, users WHERE roles.roleid = user_roles.roleid AND users.userid = user_roles.userid AND users.username = ?",
-                BeanPropertyRowMapper.newInstance(Role.class),
-                username
-        ).get(0);
-    }
-
-    public boolean isValidUser(String username, String password) {
-        User user = jdbcTemplate.query(
-                "SELECT salt, password FROM users WHERE username = ?",
-                BeanPropertyRowMapper.newInstance(User.class),
-                username
-        ).get(0);
-        try {
-            return securePass.validatePassword(password, user.getPassword(), user.getSalt());
-        } catch (Exception e) {
-            throw new AuthenticationException("Invalid password");
-        }
+    public Optional<User> findByUsername(String username) {
+        User user = jdbcTemplate.queryForObject(
+                "SELECT username, password, roles.name AS rolename, roles.isadmin FROM roles, user_roles, users WHERE roles.roleid = user_roles.roleid AND users.userid = user_roles.userid AND users.username = ?",
+                new UserRowMapper(), username);
+        return Optional.of(user);
     }
 }

@@ -1,9 +1,12 @@
 package han.aim.se.noyoumaynot.movie.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String username;
     private String password;
-    private String salt;
+    private List<Role> roles = new ArrayList<>();
 
     public String getUsername() {
         return username;
@@ -21,11 +24,7 @@ public class User {
         this.password = password;
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
+    public List<Role> getRoles() {
+        return roles;
     }
 }
