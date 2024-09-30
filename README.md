@@ -25,13 +25,13 @@ In de loop van deze workshop gaan we onderscheid maken in wie deze endpoints mog
 
 ## 2. Gebruiken TokenService
 Nu kan nog iedereen elke endpoint benaderen. Dat willen we niet. We willen naar een systeem waar je moet inloggen om de juiste toegang te krijgen.
-Daarvoor nemen we eerst de bestaande *AuthenticationService* in gebruik. 
+Daarvoor nemen we eerst de bestaande *AuthenticationService* in gebruik.
 Deze wordt al geïnjecteerd in de *MovieController*.
 Om de methodes te kunnen aanroepen hebben we een gebruikersnaam en wachtwoord nodig.
 - Zet een username en een wachtwoord voorlopig als hardcoded String constanten in de *MovieController*.
 
 ## 3. De eerste stap naar autorisatie
-In de *MovieController* bevindt zich een methode authenticate. 
+In de *MovieController* bevindt zich een methode authenticate.
 Roep deze aan vanuit iedere endpoint.
 Je zult zien dat je op iedere endpoint een exception krijgt.
 Bouw een ControllerAdvice die zorgt voor een nette status 401 (unauthorized).
@@ -43,10 +43,10 @@ In de *AuthenticationService* staan de methodes login, isValidRequest en getUser
 Herschrijf deze methodes zodanig dat er een usertoken wordt gegeneerd en de juiste gegevens worden teruggegeven.
 
 ## 5 Login endpoint maken
-Maak een methode login die je bindt aan de url /login. 
+Maak een methode login die je bindt aan de url /login.
 Voor nu maken we er get request van zonder parameters.
 In de login methode roep je met je (constante) username en wachtwoord als parameters, de methode authenticationService.login aan.
-Bewaar het gegenereerde token in een publieke variabele. 
+Bewaar het gegenereerde token in een publieke variabele.
 Gebruik deze waarde in de authentication methode.
 Nu werken de endpoints alleen als je eerst /login hebt uitgevoerd
 
@@ -61,7 +61,7 @@ Controleer *hardcoded* op username wachtwoord in de AuthenticationService. Maak 
 Vanaf nu gaan we de token steeds mee geven met ieder bericht.
 Hiervoor heb je in Spring Boot de annotatie *@RequestHeader(HttpHeaders.AUTHORIZATION) String authorization*.
 
-Voeg deze als parameter aan je endpoints toe. 
+Voeg deze als parameter aan je endpoints toe.
 Geef vervolgens de *authorization* parameter mee aan de authenticate-methode.
 
 ## 8. Een tweede stap naar autorisatie
@@ -106,7 +106,7 @@ Je wil daar ook de rollen definieren en daar de gebruiker aan koppelen.
 
 ## EXTRA Omzetten naar Spring Boot
 De database staat nu goed en de endpoints ook. Authenticatie en autorisatie hebben we handmatig gebouwd.
-Spring Boot biedt hier echter oplossingen voor. 
+Spring Boot biedt hier echter oplossingen voor.
 - Ga op zoek naar bronnen om dit op te lossen met Spring Boot
-- Pas deze oplossingen toe. 
+- Pas deze oplossingen toe.
 - Wat is je mening hierover? Makkelijk, moeilijk, overzichtelijk, of juist niet?
