@@ -31,20 +31,20 @@ public class MovieController {
     }
 
     @GetMapping("/movies")
-    public List<Movie> getAllMovies(@RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
+    public List<Movie> getAllMovies(@RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
         authenticate(token);
         return movieService.getMovieList();
     }
 
     @GetMapping("/movies/show")
-    public Movie getMovieById(@RequestParam("id") String id, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
+    public Movie getMovieById(@RequestParam("id") String id, @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
         authenticate(token);
         Movie movie = movieService.getMovieById(id);
         return movie;
     }
 
     @PostMapping("/movies/add")
-    public Movie addMovie(@RequestBody Movie movie, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
+    public Movie addMovie(@RequestBody Movie movie, @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
         Role role = authenticate(token);
         if (!role.getIsAdmin()) {
             throw new AuthorizationException("Unauthorized");
@@ -54,7 +54,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/movies/delete/{id}")
-    public ResponseEntity<String> deleteMovie(@PathVariable("id") String id, @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String token) {
+    public ResponseEntity<String> deleteMovie(@PathVariable("id") String id, @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
         Role role = authenticate(token);
         if (!role.getIsAdmin()) {
             throw new AuthorizationException("Unauthorized");
