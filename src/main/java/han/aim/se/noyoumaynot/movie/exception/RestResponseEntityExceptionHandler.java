@@ -1,6 +1,5 @@
-package han.aim.se.noyoumaynot.movie.controller;
+package han.aim.se.noyoumaynot.movie.exception;
 
-import han.aim.se.noyoumaynot.movie.repository.MovieNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

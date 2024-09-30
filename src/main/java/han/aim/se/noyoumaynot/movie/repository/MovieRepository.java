@@ -1,6 +1,7 @@
 package han.aim.se.noyoumaynot.movie.repository;
 
 import han.aim.se.noyoumaynot.movie.domain.Movie;
+import han.aim.se.noyoumaynot.movie.exception.MovieNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,8 +11,6 @@ import java.util.List;
 
 @Repository
 public class MovieRepository {
-
-
     private final JdbcTemplate jdbcTemplate;
 
     public MovieRepository(@Autowired JdbcTemplate jdbcTemplate) {
@@ -23,11 +22,12 @@ public class MovieRepository {
     }
 
     public Movie findMovieById(String id) {
-        List<Movie> movies = jdbcTemplate.query("SELECT * FROM movies WHERE movieid = ?", BeanPropertyRowMapper.newInstance(Movie.class), id);
+        List<Movie> movies = jdbcTemplate.query("SELECT * FROM movies WHERE movieid = ?",
+                BeanPropertyRowMapper.newInstance(Movie.class), id);
         if (!movies.isEmpty()) {
             return movies.get(0);
         }
-        throw new MovieNotFoundException();
+        throw new MovieNotFoundException("Movie not found");
     }
 
     public void add(Movie movie) {
