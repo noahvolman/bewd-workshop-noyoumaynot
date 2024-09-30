@@ -2,19 +2,15 @@ package han.aim.se.noyoumaynot.movie.service;
 
 import han.aim.se.noyoumaynot.movie.domain.Movie;
 import han.aim.se.noyoumaynot.movie.repository.MovieRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class MovieService {
-    private MovieRepository movieRepository;
-
-    @Autowired
-    public MovieService(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
-    }
+    private final MovieRepository movieRepository;
 
     public List<Movie> getMovieList() {
         return movieRepository.getMovieList();

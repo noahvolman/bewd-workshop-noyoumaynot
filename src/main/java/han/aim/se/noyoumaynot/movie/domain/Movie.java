@@ -1,23 +1,15 @@
 package han.aim.se.noyoumaynot.movie.domain;
 
-// This class is called a DTO (Data Transferable Object)
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
-    public String getMovieid() {
-        return movieid;
-    }
-
-    public void setMovieid(String movieid) {
-        this.movieid = movieid;
-    }
-
     private String movieid;
     private String name;
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
 }
