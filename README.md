@@ -110,3 +110,5 @@ Spring Boot biedt hier echter oplossingen voor.
 - Ga op zoek naar bronnen om dit op te lossen met Spring Boot
 - Pas deze oplossingen toe.
 - Wat is je mening hierover? Makkelijk, moeilijk, overzichtelijk, of juist niet?
+
+(Zie voor uitwerking de uitwerking-spring-security branch)
